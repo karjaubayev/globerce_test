@@ -2,8 +2,8 @@
 FROM python:latest
 
 # set work directory
-RUN mkdir /usr/src/powerdash
-WORKDIR /usr/src/powerdash
+RUN mkdir /usr/src/globerce
+WORKDIR /usr/src/globerce
 
 # set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
@@ -16,8 +16,8 @@ RUN apt-get update && apt-get install -y \
 
 # install dependencies
 RUN pip install --upgrade pip
-COPY ./requirements.txt /usr/src/powerdash/requirements.txt
+COPY ./requirements.txt /usr/src/globerce/requirements.txt
 RUN pip install -r requirements.txt
 
 # copy project
-COPY . /usr/src/powerdash/
+COPY . /usr/src/globerce/
