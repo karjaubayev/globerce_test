@@ -1,0 +1,370 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="main">
+	<div class="main-inner">
+		<div class="section">
+			<div class="heading flex">
+				<div class="heading-left lower">
+					<h4>Сейчас: <span id="time">13:00</span> (IV)</h4>
+				</div>
+				<div class="heading-right flex">
+					<div class="heading-right-in lower">
+						<h4>Pmin: <span id="#">30</span>
+						</h4>
+					</div>
+					<div class="heading-right-in lower">
+						<h4>Pmax: <span id="#">35</span>
+						</h4>
+					</div>
+					<div class="heading-right-in">
+						<div class="dropdown">
+							<button onclick="myFunction()" class="sumButton dropbtn">
+								<span id="dropTitle">СУММАРНО</span>
+								<i class="fa fa-caret-down"></i>
+							</button>
+							<div id="myDropdown" class="dropdown-content">
+								<a href="#" onclick="dropTitle(1)">ТЭЦ-1</a>
+								<a href="#" onclick="dropTitle(2)">ТЭЦ-2</a>
+								<a href="#" onclick="dropTitle(3)">ТЭС</a>
+								<a href="#" onclick="dropTitle('sum')">СУММАРНО</a>
+							</div>
+						</div>
+					</div>
+					
+				</div>
+			</div>
+			<div class="ctr flex">
+				<div class="ctr_card">
+					<div class="ctr_card_header">
+						<h4>ТЭЦ-1</h4>
+						<img src="{% static 'records/images/diagram.svg' %}" class="diagram">
+						<p class="ctr_card_header_digit">30.64</p>
+					</div>
+					<div class="ctr_card_footer">
+						<p class="digit">36.74</p>
+					</div>
+				</div>
+				<div class="ctr_card">
+					<div class="ctr_card_header">
+						<h4>ТЭЦ-2</h4>
+						<img src="{% static 'records/images/diagram2.svg' %}" class="diagram">
+						<p class="ctr_card_header_digit">328.5</p>
+					</div>
+					<div class="ctr_card_footer">
+						<p class="digit">336.7</p>
+					</div>
+				</div>
+				<div class="ctr_card">
+					<div class="ctr_card_header">
+						<h4>ТЭС</h4>
+						<img src="{% static 'records/images/diagram3.svg' %}" class="diagram">
+						<p class="ctr_card_header_digit">145.81</p>
+					</div>
+					<div class="ctr_card_footer">
+						<p class="digit">146</p>
+					</div>
+				</div>
+				<div class="ctr_card">
+					<div class="ctr_card_header">
+						<h4>СУММАРНО</h4>
+						<img src="{% static 'records/images/diagram4.svg' %}" class="diagram">
+						<p class="ctr_card_header_digit">504.95</p>
+					</div>
+					<div class="ctr_card_footer">
+						<p class="digit">516</p>
+					</div>
+				</div>
+
+			</div>
+			<!-- Table -->
+			<div class="table">
+				<h4>Таблица мощностей за <span id="date">25.05.2020</span></h4>
+				<div class="table_container">
+					<div class="table-inner">
+						<div class="section">
+							<table class="table table-border">
+								<thead>
+									<tr>
+										<th class="no" scope="col">#</th>
+										<th class="col" colspan="4" scope="col">ТЭЦ-1</th>
+										<th class="col" colspan="4" scope="col">ТЭЦ-2</th>
+										<th class="col" colspan="4" scope="col">ТЭC</th>
+										<th class="col" colspan="4" scope="col">СУММАРНО</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>Время</td>
+										<td>I</td>
+										<td>II</td>
+										<td>III</td>
+										<td>IV</td>
+										<td>I</td>
+										<td>II</td>
+										<td>III</td>
+										<td>IV</td>
+										<td>I</td>
+										<td>II</td>
+										<td>III</td>
+										<td>IV</td>
+										<td>I</td>
+										<td>II</td>
+										<td>III</td>
+										<td>IV</td>
+									</tr>
+									<!-- first row -->
+									<tr >
+										<td rowspan="2" class="v-center">
+											<span id="time">13:00</span>
+										</td>
+										<td>
+											<span id="tes1_1">30.2</span>
+										</td>
+										<td>
+											<span id="tes1_2">30.8</span>
+										</td>
+										<td>
+											<span id="tes1_3">31.7</span>
+										</td>
+										<td>
+											<span id="tes1_4">36.5</span>
+										</td>
+										<td>
+											<span id="tes2_1">310.2</span>
+										</td>
+										<td>
+											<span id="tes2_2">314.8</span>
+										</td>
+										<td>
+											<span id="tes2_3">324.7</span>
+										</td>
+										<td class="orange-bg">
+											<span
+											id="tes2_4">285.56</span>
+										</td>
+										<td class="red-bg">
+											<span
+											id="tes3_1">165.45</span>
+										</td>
+										<td class="red-bg">
+											<span
+											id="tes3_2">153.9
+											</span>
+										</td>
+										<td class="orange-bg">
+											<span
+											id="tes3_3">128.5</span>
+										</td>
+										<td>
+											<span id="tes3_4">139.2</span>
+										</td>
+										<td> 
+											<span id="sum_1">30.2</span>
+										</td>
+										<td> 
+											<span id="sum_2">30.8</span>
+										</td>
+										<td> 
+											<span id="sum_3">31.7</span>
+										</td>
+										<td class="red-bg">
+											<span id="sum_4">36.5</span>
+										</td>
+									</tr>
+									<tr>
+										<td colspan="4"> 
+											<span 
+											id="tes1_avg">33.4</span>
+										</td>
+										<td colspan="4"> 
+											<span
+											id="tes2_avg">33.4</span>
+										</td>
+										<td colspan="4"> 
+											<span
+											id="tes3_avg">33.5</span>
+										</td>
+										<td colspan="4"> 
+											<span
+											id="sum_avg">33.4</span>
+										</td>
+									</tr>
+									<!-- second row -->
+									<tr >
+										<td rowspan="2" class="v-center">
+											<span id="time">12:00</span>
+										</td>
+										<td>
+											<span id="tes1_1">30.2</span>
+										</td>
+										<td>
+											<span id="tes1_2">30.8</span>
+										</td>
+										<td>
+											<span id="tes1_3">31.7</span>
+										</td>
+										<td>
+											<span id="tes1_4">36.5</span>
+										</td>
+										<td>
+											<span id="tes2_1">310.2</span>
+										</td>
+										<td>
+											<span id="tes2_2">314.8</span>
+										</td>
+										<td>
+											<span id="tes2_3">324.7</span>
+										</td>
+										<td class="orange-bg">
+											<span
+											id="tes2_4">285.56</span>
+										</td>
+										<td class="red-bg">
+											<span
+											id="tes3_1">165.45</span>
+										</td>
+										<td class="red-bg">
+											<span
+											id="tes3_2">153.9
+											</span>
+										</td>
+										<td class="orange-bg">
+											<span
+											id="tes3_3">128.5</span>
+										</td>
+										<td>
+											<span id="tes3_4">139.2</span>
+										</td>
+										<td> 
+											<span id="sum_1">30.2</span>
+										</td>
+										<td> 
+											<span id="sum_2">30.8</span>
+										</td>
+										<td> 
+											<span id="sum_3">31.7</span>
+										</td>
+										<td class="red-bg">
+											<span id="sum_4">36.5</span>
+										</td>
+									</tr>
+									<tr>
+										<td colspan="4"> 
+											<span 
+											id="tes1_avg">33.4</span>
+										</td>
+										<td colspan="4"> 
+											<span
+											id="tes2_avg">33.4</span>
+										</td>
+										<td colspan="4"> 
+											<span
+											id="tes3_avg">33.5</span>
+										</td>
+										<td colspan="4"> 
+											<span
+											id="sum_avg">33.4</span>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- Table end-->
+		</div>
+	</div>
+	<!-- Side menu -->
+	<div class="menu_bar" id="menu_bar">
+		<div class="menu_inner">
+			<div class="value_edit">
+				<h4 class="value_edit_title">Редактирование значении</h4>
+				<div class="value_tes">
+					<h4>ТЭЦ-1</h4>
+					<div class="value_inputs">
+						<div class="value_input_container flex">
+							<span>Pmin</span>
+							<input type="text" name="pmin" value= "350">
+						</div>
+						<div class="value_input_container flex">
+							<span>Pmax</span>
+							<input type="text" name="pmin" value="350">
+						</div>
+						<a href="#">Изменить</a>
+					</div>
+				</div>
+				<div class="value_tes">
+					<h4>ТЭЦ-2</h4>
+					<div class="value_inputs">
+						<div class="value_input_container flex">
+							<span>Pmin</span>
+							<input type="text" name="pmin">
+						</div>
+						<div class="value_input_container flex">
+							<span>Pmax</span>
+							<input type="text" name="pmin">
+						</div>
+						<a href="#">Изменить</a>
+					</div>
+				</div>
+				<div class="value_tes">
+					<h4>ТЭЦ-3</h4>
+					<div class="value_inputs">
+						<div class="value_input_container flex">
+							<span>Pmin</span>
+							<input type="text" name="pmin">
+						</div>
+						<div class="value_input_container flex">
+							<span>Pmax</span>
+							<input type="text" name="pmin">
+						</div>
+						<a href="#">Изменить</a>
+					</div>
+				</div>
+				<div class="value_tes">
+					<h4>СУММАРНО</h4>
+					<div class="value_inputs">
+						<div class="value_input_container flex">
+							<span>Pmin</span>
+							<input type="text" name="pmin">
+						</div>
+						<div class="extra value_input_container flex">
+							<span>Pmax</span>
+							<input type="text" name="pmin">
+						</div>
+						<button type="button" class="btn btn-primary">Сохранить</button>
+						<button type="button" class="btn btn-outline-primary">Отмена</button>
+					</div>
+				</div>
+			</div>
+			<div class="date_edit">
+				<h4 class="date_edit_title">Просмотр даты и отчет</h4>
+				<div class="date_edit_inner">
+					<div class="date_input">
+						<span>С даты</span>
+						<div class="date_input_edit flex_no_justify">
+							<input type="date" id="datetimepicker1" name="">
+							<a href="#">Сбросить</a>
+
+						</div>
+					</div>
+					<div class="date_input">
+						<span>По дате</span>
+						<div class="date_input_edit flex_no_justify">
+							<input type="date" id="datetimepicker1" name="">
+							<a href="#">Сбросить</a>
+						</div>
+					</div>
+					<div class="date_save">
+						<button type="button" class="btn btn-primary">Перейти к таблице</button>
+						<button type="button" class="btn btn-outline-primary">Скачать отчет</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Side menu end-->
+</div>
+{% endblock %}

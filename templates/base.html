@@ -1,0 +1,42 @@
+{% load static %}
+<html lang="en">
+
+<head>
+	<title>МАЭК-Казатомпром</title>
+	<meta charset="utf-8">
+	<meta http-equiv="refresh" content="300">
+	<link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="{% static 'records/styles/bootstrap.min.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'records/styles/index.css' %}">
+	{% block extra_css %}{% endblock extra_css%}
+</head>
+
+<body>
+	<header>
+		<div class="header_inner">
+			<div class="section flex">
+				<div class="header_in_left">
+					<h4>МАЭК-Казатомпром</h4>
+				</div>
+				<div class="header_in_right">
+					<h4>Мониторинг Мощности</h4>
+					<a onclick="openMenu()" href="#">
+						<i class="fa fa-bars" id="show"></i>
+						<i class="fa fa-times"id="hide"></i>
+					</a>
+				</div>
+			</div>
+		</div>
+    </header>
+
+    <section id="main">
+        {% block content %}{% endblock content%}
+	</section>
+	
+	<script src="https://use.fontawesome.com/9f2addf559.js"></script>
+	<!-- <script type="text/javascript" src="{% static 'records/styles/bootstrap.min.js' %}"></script> -->
+	<script type="text/javascript" src="{% static 'records/styles/index.js' %}"></script>
+	{% block extra_js %}{% endblock extra_js%}
+</body>
+
+</html>

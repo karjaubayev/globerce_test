@@ -1,0 +1,640 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block extra_css %}
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+{% endblock extra_css%}
+{% block content %}
+<div class="main">
+	<div class="main-inner">
+		<div class="section">
+			<div class="heading flex" id="heading">
+				<div class="heading-left lower">
+					<h4>Последние обновления: <span id="time">[[last_time]]</span> ([[last_quarter]])</h4>
+				</div>
+				<div class="heading-right flex">
+					<div class="heading-right-in lower">
+						<h4>Pmin: <span id="#">[[selectedDrp.min]]</span>
+						</h4>
+					</div>
+					<div class="heading-right-in lower">
+						<h4>Pmax: <span id="#">[[selectedDrp.max]]</span>
+						</h4>
+					</div>
+					<div class="heading-right-in">
+						<div class="sel-dropdown">
+
+							<select v-model="selectedDrp">
+								<option v-for="item in stations_limit" :value="item">[[item.station]]</option>
+							</select>
+
+							<!-- <select v-model="selectedDrp">
+								<option v-for="(value, key) in station_limits" :value="value">[[key]]</option>
+							</select> -->
+
+							<!-- <button onclick="myFunction()" class="sumButton dropbtn">
+								<span id="dropTitle">СУММАРНО</span>
+								<i class="fa fa-caret-down"></i>
+							</button>
+							<div id="myDropdown" class="dropdown-content">
+								<a href="#" onclick="dropTitle(1)">ТЭЦ-1</a>
+								<a href="#" onclick="dropTitle(2)">ТЭЦ-2</a>
+								<a href="#" onclick="dropTitle(3)">ТЭС</a>
+								<a href="#" onclick="dropTitle('sum')">СУММАРНО</a>
+							</div> -->
+						</div>
+					</div>
+					
+				</div>
+			</div>
+			<div class="ctr flex" id="ctr">
+				<ctr-card
+				v-for="obj in last_records"
+				v-bind:key="obj.station"
+  				v-bind:item="obj"></ctr-card>
+			</div>
+			<!-- Table -->
+			<div class="table" id="main_table">
+				<h4>Таблица мощностей за <span id="date">[[ last_date ]]</span></h4>
+				<div class="table_container">
+					<div class="table-inner">
+						<div class="section">
+							<table class="table table-border" id="table_com">
+								<thead>
+									<tr>
+										<th class="no" scope="col">#</th>
+										<th class="col" colspan="4" scope="col">ТЭЦ-1</th>
+										<th class="col" colspan="4" scope="col">ТЭЦ-2</th>
+										<th class="col" colspan="4" scope="col">ТЭC</th>
+										<th class="col" colspan="4" scope="col">СУММАРНО</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>Время</td>
+										<td>1</td>
+										<td>2</td>
+										<td>3</td>
+										<td>4</td>
+										<td>1</td>
+										<td>2</td>
+										<td>3</td>
+										<td>4</td>
+										<td>1</td>
+										<td>2</td>
+										<td>3</td>
+										<td>4</td>
+										<td>1</td>
+										<td>2</td>
+										<td>3</td>
+										<td>4</td>
+									</tr>
+									<!-- first row -->
+									<tbody
+									is="tbl-rw"
+									v-for="obj in records_dump"
+									v-bind:key="obj.hour"
+									v-bind:item="obj">
+
+									</tbody>
+									<!-- <tbody>
+									<tr >
+										<td rowspan="2" class="indacenter">
+											<span id="time">13:00</span>
+										</td>
+										<td>
+											<span id="tes1_1">30.5</span>
+										</td>
+										<td>
+											<span id="tes1_2">30.8</span>
+										</td>
+										<td>
+											<span id="tes1_3">31.7</span>
+										</td>
+										<td>
+											<span id="tes1_4">36.5</span>
+										</td>
+										<td>
+											<span id="tes2_1">310.2</span>
+										</td>
+										<td>
+											<span id="tes2_2">314.8</span>
+										</td>
+										<td>
+											<span id="tes2_3">324.7</span>
+										</td>
+										<td class="orange-bg">
+											<span
+											id="tes2_4">285.56</span>
+										</td>
+										<td class="red-bg">
+											<span
+											id="tes3_1">165.45</span>
+										</td>
+										<td class="red-bg">
+											<span
+											id="tes3_2">153.9
+											</span>
+										</td>
+										<td class="orange-bg">
+											<span
+											id="tes3_3">128.5</span>
+										</td>
+										<td>
+											<span id="tes3_4">139.2</span>
+										</td>
+										<td> 
+											<span id="sum_1">30.2</span>
+										</td>
+										<td> 
+											<span id="sum_2">30.8</span>
+										</td>
+										<td> 
+											<span id="sum_3">31.7</span>
+										</td>
+										<td class="red-bg">
+											<span id="sum_4">36.5</span>
+										</td>
+									</tr>
+									<tr>
+										<td colspan="4"> 
+											<span 
+											id="tes1_avg">33.4</span>
+										</td>
+										<td colspan="4"> 
+											<span
+											id="tes2_avg">33.4</span>
+										</td>
+										<td colspan="4"> 
+											<span
+											id="tes3_avg">33.5</span>
+										</td>
+										<td colspan="4"> 
+											<span
+											id="sum_avg">33.4</span>
+										</td>
+									</tr>
+									</tbody> -->
+									<!-- second row -->
+									<!-- <tr >
+										<td rowspan="2" class="indacenter">
+											<span id="time">12:00</span>
+										</td>
+										<td>
+											<span id="tes1_1">30.2</span>
+										</td>
+										<td>
+											<span id="tes1_2">30.8</span>
+										</td>
+										<td>
+											<span id="tes1_3">31.7</span>
+										</td>
+										<td>
+											<span id="tes1_4">36.5</span>
+										</td>
+										<td>
+											<span id="tes2_1">310.2</span>
+										</td>
+										<td>
+											<span id="tes2_2">314.8</span>
+										</td>
+										<td>
+											<span id="tes2_3">324.7</span>
+										</td>
+										<td class="orange-bg">
+											<span
+											id="tes2_4">285.56</span>
+										</td>
+										<td class="red-bg">
+											<span
+											id="tes3_1">165.45</span>
+										</td>
+										<td class="red-bg">
+											<span
+											id="tes3_2">153.9
+											</span>
+										</td>
+										<td class="orange-bg">
+											<span
+											id="tes3_3">128.5</span>
+										</td>
+										<td>
+											<span id="tes3_4">139.2</span>
+										</td>
+										<td> 
+											<span id="sum_1">30.2</span>
+										</td>
+										<td> 
+											<span id="sum_2">30.8</span>
+										</td>
+										<td> 
+											<span id="sum_3">31.7</span>
+										</td>
+										<td class="red-bg">
+											<span id="sum_4">36.5</span>
+										</td>
+									</tr>
+									<tr>
+										<td colspan="4"> 
+											<span 
+											id="tes1_avg">33.4</span>
+										</td>
+										<td colspan="4"> 
+											<span
+											id="tes2_avg">33.4</span>
+										</td>
+										<td colspan="4"> 
+											<span
+											id="tes3_avg">33.5</span>
+										</td>
+										<td colspan="4"> 
+											<span
+											id="sum_avg">33.4</span>
+										</td>
+									</tr> -->
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- Table end-->
+		</div>
+	</div>
+	<!-- Side menu -->
+	<div class="menu_bar" id="menu_bar">
+		<div class="menu_inner">
+			<div class="value_edit" id="side_menu">
+				<h4 class="value_edit_title">Редактирование значении</h4>
+				<div class="value_tes">
+					<h4>ТЭЦ-1</h4>
+					<div class="value_inputs">
+						<div class="value_input_container flex">
+							<span>Pmin</span>
+							<input type="text" name="pmin" value= "350">
+						</div>
+						<div class="value_input_container flex">
+							<span>Pmax</span>
+							<input type="text" name="pmin" value="350">
+						</div>
+						<a href="#">Изменить</a>
+					</div>
+				</div>
+				<div class="value_tes">
+					<h4>ТЭЦ-2</h4>
+					<div class="value_inputs">
+						<div class="value_input_container flex">
+							<span>Pmin</span>
+							<input type="text" name="pmin">
+						</div>
+						<div class="value_input_container flex">
+							<span>Pmax</span>
+							<input type="text" name="pmin">
+						</div>
+						<a href="#">Изменить</a>
+					</div>
+				</div>
+				<div class="value_tes">
+					<h4>ТЭЦ-3</h4>
+					<div class="value_inputs">
+						<div class="value_input_container flex">
+							<span>Pmin</span>
+							<input type="text" name="pmin">
+						</div>
+						<div class="value_input_container flex">
+							<span>Pmax</span>
+							<input type="text" name="pmin">
+						</div>
+						<a href="#">Изменить</a>
+					</div>
+				</div>
+				<div class="value_tes">
+					<h4>СУММАРНО</h4>
+					<div class="value_inputs">
+						<div class="value_input_container flex">
+							<span>Pmin</span>
+							<input type="text" name="pmin">
+						</div>
+						<div class="extra value_input_container flex">
+							<span>Pmax</span>
+							<input type="text" name="pmin">
+						</div>
+						<button type="button" class="btn btn-primary">Сохранить</button>
+						<button type="button" class="btn btn-outline-primary">Отмена</button>
+					</div>
+				</div>
+			</div>
+			<div class="date_edit">
+				<h4 class="date_edit_title">Просмотр даты и отчет</h4>
+				<div class="date_edit_inner">
+					<div class="date_input">
+						<span>С даты</span>
+						<div class="date_input_edit flex_no_justify">
+							<input type="date" id="datetimepicker1" name="">
+							<a href="#">Сбросить</a>
+
+						</div>
+					</div>
+					<div class="date_input">
+						<span>По дате</span>
+						<div class="date_input_edit flex_no_justify">
+							<input type="date" id="datetimepicker1" name="">
+							<a href="#">Сбросить</a>
+						</div>
+					</div>
+					<div class="date_save">
+						<button type="button" class="btn btn-primary">Перейти к таблице</button>
+						<button type="button" class="btn btn-outline-primary">Скачать отчет</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Side menu end-->
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script type='text/javascript'>
+	var last_date = {{ last_date|safe }};
+	var last_time = {{ last_time|safe}};
+	var last_hour = {{ last_hour|safe}};
+	var last_min = {{ last_min|safe}};
+	var last_quarter = {{ last_quarter|safe}};
+
+	var stations_limit = {{ stations_limit|safe }};
+	console.log(stations_limit)
+	var last_records = {{last_records|safe}};
+	console.log(last_records)
+	var records = {{records|safe}};
+	console.log(records)
+	var records_dump = {{records_dump|safe}};
+	console.log(records_dump)
+</script>
+
+<script type="text/x-template" id="tmpl-ctr-card">
+	<div class="ctr_card">
+		<div class="ctr_card_header">
+			<h4>[[item.station]]</h4>
+			<img src="{% static 'records/images/diagram.svg' %}" class="diagram">
+			<p class="ctr_card_header_digit">[[item.value]]</p>
+		</div>
+		<div class="ctr_card_footer">
+			<p class="digit">[[item.sum]]</p>
+		</div>
+	</div>
+</script>
+
+<script type="text/x-template" id="tmpl-tbl-rw">
+	<tbody>
+		<tr >
+			<td rowspan="2" class="indacenter">
+				<span id="time">[[item.hour]]</span>
+			</td>
+			<tbl-td
+			v-for="val in item.data[0]"
+			v-bind:item="val"></tbl-td>
+			<!-- <td>
+				<span id="tes1_1">[[item.data[0].q1]]</span>
+			</td>
+			<td>
+				<span id="tes1_2">[[item.data[0].q2]]</span>
+			</td>
+			<td>
+				<span id="tes1_3">[[item.data[0].q3]]</span>
+			</td>
+			<td>
+				<span id="tes1_4">[[item.data[0].q4]]</span>
+			</td> -->
+			<td>
+				<span id="tes2_1">[[item.data[1].q1]]</span>
+			</td>
+			<td>
+				<span id="tes2_2">[[item.data[1].q2]]</span>
+			</td>
+			<td>
+				<span id="tes2_3">[[item.data[1].q3]]</span>
+			</td>
+			<td class="orange-bg">
+				<span
+				id="tes2_4">[[item.data[1].q4]]</span>
+			</td>
+			<td class="red-bg">
+				<span
+				id="tes3_1">[[item.data[2].q1]]</span>
+			</td>
+			<td class="red-bg">
+				<span
+				id="tes3_2">[[item.data[2].q2]]</span>
+			</td>
+			<td class="orange-bg">
+				<span
+				id="tes3_3">[[item.data[2].q3]]</span>
+			</td>
+			<td>
+				<span id="tes3_4">[[item.data[2].q4]]</span>
+			</td>
+			<td> 
+				<span id="sum_1">[[item.data[3].q1]]</span>
+			</td>
+			<td> 
+				<span id="sum_2">[[item.data[3].q2]]</span>
+			</td>
+			<td> 
+				<span id="sum_3">[[item.data[3].q3]]</span>
+			</td>
+			<td class="red-bg">
+				<span id="sum_4">[[item.data[3].q4]]</span>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="4"> 
+				<span 
+				id="tes1_avg">[[item.data[0].sum]]</span>
+			</td>
+			<td colspan="4"> 
+				<span
+				id="tes2_avg">[[item.data[1].sum]]</span>
+			</td>
+			<td colspan="4"> 
+				<span
+				id="tes3_avg">[[item.data[2].sum]]</span>
+			</td>
+			<td colspan="4"> 
+				<span
+				id="sum_avg">[[item.data[3].sum]]</span>
+			</td>
+		</tr>
+	</tbody>
+</script>
+<script type="text/x-template" id="tmpl-tbl-td">
+	<td v-bind:class="classObject">
+		<span id="tes1_1">[[item]]</span>
+	</td>
+</script>
+
+<!-- <script type="text/x-template" id="tmpl-tbl-row">
+	<tr >
+		<td rowspan="2" class="indacenter">
+			<span id="time">[[item.hour]]</span>
+		</td>
+		<td>
+			<span id="tes1_1">30.5</span>
+		</td>
+		<td>
+			<span id="tes1_2">30.8</span>
+		</td>
+		<td>
+			<span id="tes1_3">31.7</span>
+		</td>
+		<td>
+			<span id="tes1_4">36.5</span>
+		</td>
+		<td>
+			<span id="tes2_1">310.2</span>
+		</td>
+		<td>
+			<span id="tes2_2">314.8</span>
+		</td>
+		<td>
+			<span id="tes2_3">324.7</span>
+		</td>
+		<td class="orange-bg">
+			<span
+			id="tes2_4">285.56</span>
+		</td>
+		<td class="red-bg">
+			<span
+			id="tes3_1">165.45</span>
+		</td>
+		<td class="red-bg">
+			<span
+			id="tes3_2">153.9
+			</span>
+		</td>
+		<td class="orange-bg">
+			<span
+			id="tes3_3">128.5</span>
+		</td>
+		<td>
+			<span id="tes3_4">139.2</span>
+		</td>
+		<td> 
+			<span id="sum_1">30.2</span>
+		</td>
+		<td> 
+			<span id="sum_2">30.8</span>
+		</td>
+		<td> 
+			<span id="sum_3">31.7</span>
+		</td>
+		<td class="red-bg">
+			<span id="sum_4">36.5</span>
+		</td>
+	</tr>
+</script>
+<script type="text/x-template" id="tmpl-tbl-row-sum">
+	<tr>
+		<td colspan="4"> 
+			<span 
+			id="tes1_avg">33.4</span>
+		</td>
+		<td colspan="4"> 
+			<span
+			id="tes2_avg">33.4</span>
+		</td>
+		<td colspan="4"> 
+			<span
+			id="tes3_avg">33.5</span>
+		</td>
+		<td colspan="4"> 
+			<span
+			id="sum_avg">33.4</span>
+		</td>
+	</tr>
+</script> -->
+
+<script>
+
+    var heading_app = new Vue({
+      delimiters: ['[[', ']]'],
+      el: '#heading',
+      data: {
+		last_date: last_date,
+		last_time: last_time,
+		last_hour: last_hour,
+		last_min: last_min,
+		last_quarter: last_quarter,
+		stations_limit: stations_limit,
+		selectedDrp: stations_limit[0]
+	  },
+    //   methods: {
+    //       greet: function(name) {
+    //           console.log('Hello from ' + name + '!')
+    //       }
+    //   }
+	});
+
+	Vue.component('ctr-card', {
+		delimiters: ['[[', ']]'],
+		props: ['item'],
+  		// props: {
+		// 	item: {
+		// 		type: Number,
+		// 		required: true
+		// 	}
+		// },
+		template: '#tmpl-ctr-card',
+	});
+
+	var ctr_app = new Vue({
+		delimiters: ['[[', ']]'],
+      	el: '#ctr',
+      	data: {
+			last_records: last_records,
+			message: 'Salam',
+		},
+	});
+
+	Vue.component('tbl-rw', {
+		delimiters: ['[[', ']]'],
+  		props: ['item'],
+		template: '#tmpl-tbl-rw',
+	});
+
+	Vue.component('tbl-td', {
+		delimiters: ['[[', ']]'],
+  		props: ['item'],
+		template: '#tmpl-tbl-td',
+		data: function () {
+    		return {
+				classObject: {
+					active: true,
+					'text-danger': true
+				}
+			}
+		},
+	});
+
+	Vue.component('tbl-row', {
+		delimiters: ['[[', ']]'],
+  		props: ['item'],
+		template: '#tmpl-tbl-row',
+	});
+
+	Vue.component('tbl-row-sum', {
+		delimiters: ['[[', ']]'],
+  		props: ['item'],
+		template: '#tmpl-tbl-row-sum',
+	});
+	
+	var table_app = new Vue({
+		delimiters: ['[[', ']]'],
+      	el: '#main_table',
+      	data: {
+			last_date: last_date,
+			records_dump: records_dump,
+		},
+	});
+  </script>
+{% endblock extra_js%}
