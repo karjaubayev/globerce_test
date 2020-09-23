@@ -12,18 +12,23 @@ class ValidateRequest():
     def __str__(self):
         return f"{self.program}-{self.person}-{self.sum}"
     
-
+    @property
     def status(self):
-        if self.program.check_sum(sum=self.sum) and self.program.check_age(age=self.person.get_age()) and self.person.not_ip() and self.person.not_banned():
+        if (self.program.check_sum(sum=self.sum) and 
+            self.program.check_age(age=self.person.age) and 
+            self.person.not_ip() and 
+            self.person.not_banned()):
+            
             return True
         else:
             return False
     
+    @property
     def text(self):
         text = ""
         if not self.program.check_sum(sum=self.sum):
             text += "Заявка не подходит по сумме. "
-        if not self.program.check_age(age=self.person.get_age()):
+        if not self.program.check_age(age=self.person.age):
             text += "Заемщик не подходит по возрасту. "
         if not self.person.not_ip():
             text += "ИИН является ИП. "
@@ -31,7 +36,6 @@ class ValidateRequest():
             text += "Заемщик в черном списке. "
         return text
         
-
 
 class Person(models.Model):
     iin = models.CharField(max_length=12,null=False)
@@ -56,7 +60,7 @@ class Person(models.Model):
     def check_ip(iin):
         try:
             url = "https://stat.gov.kz/api/juridical/gov/"
-            params = {"bin": iin, "lang": "ru"}
+            params = {"bin": iin, "lang": "run"}
             r = requests.get(url, params=params)
             if 'json' in r.headers.get('Content-Type'):
                 res = r.json()
@@ -64,11 +68,12 @@ class Person(models.Model):
                     return False
                 else:
                     return True
-            return True # returning anyway
+            # return True # returning anyway
         except Exception as e:
             raise Exception(f"Error: {e}") from e
     
-    def get_age(self):
+    @property
+    def age(self):
         today = date.today()
         return today.year - self.birthday.year - ((today.month, today.day) < (self.birthday.month, self.birthday.day))
     
@@ -98,8 +103,6 @@ class Program(models.Model):
     
     def check_sum(self, sum):
         try:
-            if isinstance(sum, str):
-                sum = int(sum)
             if self.min_value < sum < self.max_value:
                 return True
             else:
@@ -109,8 +112,6 @@ class Program(models.Model):
     
     def check_age(self, age):
         try:
-            if isinstance(age, str):
-                age = str(age)
             if self.min_age < age < self.max_age:
                 return True
             else:
@@ -139,11 +140,12 @@ class CreditRequest(models.Model):
 
     def save(self, *args, **kwargs):
         validate = ValidateRequest(program=self.program, person=self.person, sum=self.sum)
-        if validate.status():
+        print(f"Validate: {validate}")
+        if validate.status:
             self.status = 0
         else:
             self.status = 1
-            self.decline = validate.text()
+            self.decline = validate.text
         super(CreditRequest, self).save(*args, **kwargs)
 
 

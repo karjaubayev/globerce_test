@@ -3,7 +3,7 @@ from credits.models import Person, Program, CreditRequest
 
 class CreditRequestSerializer(serializers.ModelSerializer):
     iin = serializers.CharField(source='person')
-    sum = serializers.CharField()
+    sum = serializers.IntegerField(min_value=0)
     status = serializers.CharField(source='get_status_display', read_only=True)
 
     class Meta:

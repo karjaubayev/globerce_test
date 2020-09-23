@@ -1,7 +1,7 @@
 from django.contrib import admin
 from credits.models import Person, BanList, Program, CreditRequest
 
-# Register your models here.
+
 @admin.register(Person)
 class PersonAdmin(admin.ModelAdmin):
     list_display = ('iin',)
